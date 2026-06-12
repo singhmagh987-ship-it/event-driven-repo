@@ -45,6 +45,12 @@ It is that specific partition to which publisher publishes the event
 ### Consumer
 Subscribes to and reads from topics
 
+### Controller
+
+### Zookeeper and KRaft (Kafka Raft)
+
+### Consumer Groups
+
 ---
 
 ## Key Points
