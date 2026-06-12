@@ -1,16 +1,53 @@
-EDA (Event Driven Architecture) and types - basically 2 - pull and push based.
-Advantages of EDA ?
+# EDA (Event Driven Architecture) and Types
 
-Kafka = distributed event streaming platform (append log based)
-Kafka Archtitecture => Multi Broker Architecture and Leader-Follower Partition
-Kafka Cluster = Combination of Multiple Kafka severs (Brokers)
-Producer publishes/emit events --> Kafka stores the Event (based on retention policy) --> Consumer subscribes/read from the kafka
-Broker = single kafka server instance which consists of some topic and some partitions
-Topic = a category where same kind of event are published by the producer.
-Partition = where the event are physically stored.
-Segments = mutilples .log files inside partition where the event gets stored.
-Producer = it publishes the event along with the topic name and key.
-which specific Partition = hash (key) % number of partition. it is that specific partition to which publisher publishes the event.
-Consumer = 
-Both Consumer and Producer read and write only from/to the leader partition.
-Kafka provides us the Replay event advantages.
+Event-Driven Architecture basically has 2 types:
+- **Pull-based**
+- **Push-based**
+
+## Advantages of EDA
+
+---
+
+## Kafka
+
+**Kafka** = Distributed event streaming platform (append log based)
+
+### Kafka Architecture
+- Multi Broker Architecture and Leader-Follower Partition
+
+### Kafka Cluster
+Combination of Multiple Kafka servers (Brokers)
+
+### Data Flow
+Producer publishes/emit events → Kafka stores the Event (based on retention policy) → Consumer subscribes/read from the kafka
+
+### Broker
+Single kafka server instance which consists of some topic and some partitions
+
+### Topic
+A category where same kind of events are published by the producer
+
+### Partition
+Where the events are physically stored
+
+### Segments
+Multiple `.log` files inside partition where the events get stored
+
+### Producer
+It publishes the event along with the topic name and key
+
+### Partition Assignment
+```
+Specific Partition = hash(key) % number_of_partitions
+```
+It is that specific partition to which publisher publishes the event
+
+### Consumer
+Subscribes to and reads from topics
+
+---
+
+## Key Points
+
+- Both Consumer and Producer read and write only from/to the leader partition
+- Kafka provides us the Replay event advantages
