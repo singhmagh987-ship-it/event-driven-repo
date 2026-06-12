@@ -1,4 +1,4 @@
-# EDA (Event Driven Architecture) and Types
+# EDA (Event Driven Architecture) and Implementing Kafka in Spring Boot
 
 Event-Driven Architecture basically has 2 types:
 - **Pull-based**
