@@ -5,12 +5,16 @@ Event-Driven Architecture basically has 2 types:
 - **Push-based**
 
 ## Advantages of EDA
+- Async , loose coupling, handles large scale continuous stream of events.
 
 ---
 
-## Kafka
+## Kafka (Message Broker)
 
 **Kafka** = Distributed event streaming platform (append log based)
+High Availability - load is shared among different kafka brokers
+No Single Point of Failure (Highly Resilient system) - multiple brokers / mutiple controllers (active+standby) / leader-follower pattern
+
 
 ### Kafka Architecture
 - Multi Broker Architecture and Leader-Follower Partition
@@ -44,12 +48,34 @@ It is that specific partition to which publisher publishes the event
 
 ### Consumer
 Subscribes to and reads from topics
-
-### Controller
-
-### Zookeeper and KRaft (Kafka Raft)
+It pulls/reads the event , process the event and do a manual batch offset commit. Kafka stores the committed offset for that consumer group + topic + partition in the "__consumer_offsets" topic (Kafka's internal topic).
 
 ### Consumer Groups
+It is a logical unit of which many consumers can be a part of.
+Rule is - 1) Multiple consumers within the same consumer group cannot read from the same partition.
+2) Two consumer within different consumer group can read from the same partition.
+
+The offset of each consumer group is stored in the _consumer_offsets topic.
+
+### Replication Factor
+
+How many partition replica should contain the event publishes by the producer. if the producer configures replication factor should be 3, the event will be stored in one leader partition along with two follower partition in different brokers.
+
+### ISR (In-Sync Replicas)
+
+The list which tells currently how many follower partition replica are in sync with the leader partition. This list includes the leader partition replica as well and this list cannot be empty as there will always be the leader partition/broker present to accept the request even if follower partition becomes out of sync.
+
+### Controller
+It is the one which takes care of the cluster metadata i.e updates the cluster metadata (_cluster_metadata.log) - cluster metadata involves Topics,Partitions,Segments and Brokers.
+It is responsible for the creation and deleteion of the topic across the brokers.
+It decides which broker consists of which topic's leader and follower parititon.
+It decides which broker will be the leader or follower in case of broker failure or crash.
+
+### Zookeeper and KRaft (Kafka Raft)
+Zookeeper is a legacy external distributed system to manage the Controller.
+KRaft (using Raft Consesnsus algorithms) is an internal layer or system within kafka to manage the Controller using Consesnsus/Quorum.
+ - There would be mutilple Contollers - one Active and others as StandBy(ready to become leader or Active contoller in case of any failure(s))
+ - Active Contoller sends hearbeats to the Standby controllers.
 
 ---
 
