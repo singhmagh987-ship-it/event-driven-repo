@@ -52,9 +52,10 @@ It pulls/reads the event , process the event and do a manual batch offset commit
 
 ### Consumer Groups
 It is a logical unit of which many consumers can be a part of.
-Rule is - 1) Multiple consumers within the same consumer group cannot read from the same partition.
-2) Two consumer within different consumer group can read from the same partition.
 
+Rule is -
+1) Multiple consumers within the same consumer group cannot read from the same partition.
+2) Two consumer within different consumer group can read from the same partition.
 The offset of each consumer group is stored in the _consumer_offsets topic.
 
 ### Replication Factor
@@ -70,6 +71,8 @@ It is the one which takes care of the cluster metadata i.e updates the cluster m
 It is responsible for the creation and deleteion of the topic across the brokers.
 It decides which broker consists of which topic's leader and follower parititon.
 It decides which broker will be the leader or follower in case of broker failure or crash.
+Shares all the updated cluster metadata information among the brokers.
+Keeps check of the broker failure(s)
 
 ### Zookeeper and KRaft (Kafka Raft)
 Zookeeper is a legacy external distributed system to manage the Controller.
