@@ -6,7 +6,6 @@ Event-Driven Architecture basically has 2 types:
 
 ## Advantages of EDA
 - Async , loose coupling, handles large scale continuous stream of events.
-
 ---
 
 ## Kafka (Message Broker)
@@ -17,7 +16,7 @@ No Single Point of Failure (Highly Resilient system) - multiple brokers / mutipl
 
 
 ### Kafka Architecture
-- Multi Broker Architecture and Leader-Follower Partition
+Multi Broker Architecture and Leader-Follower Partition
 
 ### Kafka Cluster
 Combination of Multiple Kafka servers (Brokers)
@@ -80,6 +79,16 @@ KRaft (using Raft Consesnsus algorithms) is an internal layer or system within k
  - There would be mutilple Contollers - one Active and others as StandBy(ready to become leader or Active contoller in case of any failure(s))
  - Active Contoller sends hearbeats to the Standby controllers.
 
+### Leader - Follower
+
+All requests are served by the leader partition or broker.
+All follower partition or broker continuous poll the leader partition or broker to be in sync.
+
+ Questions to ask yourself?
+ - ### what happens when the Active controller fails?
+ - ### what happens when leader partition fails?
+ - ### what happens when follower partition fails?
+ - ## what happens when consumer fails?
 ---
 
 ## Key Points
