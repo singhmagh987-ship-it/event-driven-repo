@@ -8,7 +8,7 @@ Event-Driven Architecture basically has 2 types:
 - Async , loose coupling, handles large scale continuous stream of events.
 ---
 
-## Kafka (Message Broker)
+## Kafka (Message Broker)(Pull based Approach)
 
 **Kafka** = Distributed event streaming platform (append log based)
 High Availability - load is shared among different kafka brokers
@@ -154,7 +154,10 @@ The Producer configuration can be listed in the application.properties
 3. key-serializer
 4. value-serializer
 5. acks. if ack=1 means wait for the leader, if ack=0 means fire and forget, if ack=all means all in-sync replicas (ISR) should confirm the event log.
-6. record accumulator - batch size (max) and buffer memory (max) and linger.ms.
+6. record accumulator - batch size (max) and buffer memory (max) and linger.ms
 7. compression-type
+8. maximum in-flight requests - default value is 5
+9. set retries limit (if a request fails with a transient error)
+
 
 
