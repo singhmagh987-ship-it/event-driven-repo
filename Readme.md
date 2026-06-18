@@ -97,17 +97,55 @@ All follower partition or broker continuous poll the leader partition or broker 
 - Kafka provides us the Replay event advantages
 
 ## Producer Flow
+1. **Producer emits the event**
 
-Producer emit the event using this kafkaTemplate.send(topic_name,key,value).
-Serializer (Use the Built-in or Custom Serializer) - which converts the key and value to bytes[].
-- Eg: For key , use the StringSerializer, For value use the JsonSerializer.
-Partitioner - it returns the partition number where the event will be persisted to.
-- Partition = hash(key)% number of partition
-Record Accumulator - it is a buffer where the events are batched based on per topic-partition. For a particluar topic and partition the events are stored for in a batch.So event are sent to the kafka broker in a batch mode. Each batch contains mutilpe events requests.
-Compression - it is used to compress the entire batch and send it to the kafka broker which gives us the advantage of less network usgae and save disk storage when stored in kafka. Algorithms like gzip , snappy etc.
-Sender Thread - It will take care to process the batch aysncronously and fetch the response from the kafka.
-- it clubs the related batch based on the leader broker and send only single producerRequest to avoid mutilple network calls to the kafka broker. 
-Producer sends the event.
+   * Producer emits the event using:
+
+     ```java
+     kafkaTemplate.send(topic_name, key, value)
+     ```
+
+2. **Serializer (Use the Built-in or Custom Serializer)**
+
+   * Converts the key and value to `byte[]`.
+   * Example:
+
+     * For key, use the `StringSerializer`.
+     * For value, use the `JsonSerializer`.
+
+3. **Partitioner**
+
+   * Returns the partition number where the event will be persisted.
+   * Formula:
+
+     ```
+     Partition = hash(key) % number of partitions
+     ```
+
+4. **Record Accumulator**
+
+   * It is a buffer where the events are batched based on per topic-partition.
+   * For a particular topic and partition, the events are stored in a batch.
+   * So events are sent to the Kafka broker in batch mode.
+   * Each batch contains multiple event requests.
+
+5. **Compression**
+
+   * Used to compress the entire batch and send it to the Kafka broker.
+   * Advantages:
+
+     * Less network usage.
+     * Saves disk storage when stored in Kafka.
+   * Algorithms like `gzip`, `snappy`, etc.
+
+6. **Sender Thread**
+
+   * Processes the batch asynchronously and fetches the response from Kafka.
+   * Clubs the related batches based on the leader broker and sends only a single `ProducerRequest` to avoid multiple network calls to the Kafka broker.
+
+7. **Producer sends the event**
+
+   * The event is sent to the Kafka broker.
 
 The Producer configuration can be listed in the application.properties
 
