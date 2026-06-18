@@ -146,6 +146,8 @@ All follower partition or broker continuous poll the leader partition or broker 
 7. **Producer sends the event**
 
    * The event is sent to the Kafka broker.
+   
+## Producer Configuration
 
 The Producer configuration can be listed in the application.properties
 
@@ -158,6 +160,4 @@ The Producer configuration can be listed in the application.properties
 7. compression-type
 8. maximum in-flight requests - default value is 5
 9. set retries limit (if a request fails with a transient error)
-
-
 
