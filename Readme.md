@@ -106,7 +106,7 @@ Partitioner - it returns the partition number where the event will be persisted 
 Record Accumulator - it is a buffer where the events are batched based on per topic-partition. For a particluar topic and partition the events are stored for in a batch.So event are sent to the kafka broker in a batch mode. Each batch contains mutilpe events requests.
 Compression - it is used to compress the entire batch and send it to the kafka broker which gives us the advantage of less network usgae and save disk storage when stored in kafka. Algorithms like gzip , snappy etc.
 Sender Thread - It will take care to process the batch aysncronously and fetch the response from the kafka.
-- it clubs the related batch based on the leader broker and send only single producerRequest to avoid mutilple network calls to the kafka broker.
+- it clubs the related batch based on the leader broker and send only single producerRequest to avoid mutilple network calls to the kafka broker. 
 Producer sends the event.
 
 The Producer configuration can be listed in the application.properties
