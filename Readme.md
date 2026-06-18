@@ -95,3 +95,28 @@ All follower partition or broker continuous poll the leader partition or broker 
 
 - Both Consumer and Producer read and write only from/to the leader partition
 - Kafka provides us the Replay event advantages
+
+## Producer Flow
+
+Producer emit the event using this kafkaTemplate.send(topic_name,key,value).
+Serializer (Use the Built-in or Custom Serializer) - which converts the key and value to bytes[].
+- Eg: For key , use the StringSerializer, For value use the JsonSerializer.
+Partitioner - it returns the partition number where the event will be persisted to.
+- Partition = hash(key)% number of partition
+Record Accumulator - it is a buffer where the events are batched based on per topic-partition. For a particluar topic and partition the events are stored for in a batch.So event are sent to the kafka broker in a batch mode. Each batch contains mutilpe events requests.
+Compression - it is used to compress the entire batch and send it to the kafka broker which gives us the advantage of less network usgae and save disk storage when stored in kafka. Algorithms like gzip , snappy etc.
+Sender Thread - It will take care to process the batch aysncronously and fetch the response from the kafka.
+- it clubs the related batch based on the leader broker and send only single producerRequest to avoid mutilple network calls to the kafka broker.
+Producer sends the event.
+
+The Producer configuration can be listed in the application.properties
+
+1. mutilple broker URLs
+2. maximum cluster metadata age
+3. key-serializer
+4. value-serializer
+5. acks. if ack=1 means wait for the leader, if ack=0 means fire and forget, if ack=all means all in-sync replicas (ISR) should confirm the event log.
+6. record accumulator - batch size (max) and buffer memory (max) and linger.ms.
+7. compression-type
+
+
